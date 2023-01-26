@@ -1,0 +1,47 @@
+Q-3
+
+select 
+cast(lpep_pickup_datetime as DATE) as "day",
+count(1) as "count",
+MAX(fare_amount),
+MAX(trip_distance)
+from green_taxi_data_2
+group by cast(lpep_pickup_datetime as DATE);
+
+
+
+Q-4
+
+select 
+cast(lpep_pickup_datetime as DATE) as "day",
+count(1) as "count",
+MAX(trip_distance) as "max_trip_distance"
+from green_taxi_data_2
+group by cast(lpep_pickup_datetime as DATE)
+order by "max_trip_distance" desc;
+
+
+
+Q-5
+
+select 
+cast(lpep_pickup_datetime as DATE) as "day",
+count(1) as "count"
+from green_taxi_data_2
+where passenger_count = 2 
+group by cast(lpep_pickup_datetime as DATE);
+
+
+Q-6
+
+select 
+MAX(t."tip_amount") as max_zonwise_tip,
+zpu."Zone" as pickup_zone,
+zdo."Zone" as dropoff_zone
+from 
+green_taxi_data_2 t JOIN zones_hw zpu
+ON t."PULocationID" = zpu."LocationID" JOIN
+zones_hw zdo 
+ON t."DOLocationID" = zdo."LocationID"
+GROUP BY zpu."Zone", zdo."Zone"
+ORDER BY MAX(t."tip_amount") DESC;
